@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@cityofzion/neon-js": "github:cityofzion/neon-js"
+  }
+}
