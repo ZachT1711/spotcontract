@@ -12,6 +12,25 @@ OnTransfer = RegisterAction('transfer', 'addr_from', 'addr_to', 'amount')
 OnRefund = RegisterAction('refund', 'addr_to', 'amount')
 
 
+# Add address as private placement, has implications on withdrawl
+def add_private_placement(ctx, address):
+    print("Adding private placement address")
+    if CheckWitness(TOKEN_OWNER):
+        if len(address) == 20:
+            storage_key = concat(PP_KEY, address)
+            Put(ctx, storage_key, True)
+            return True
+    return False
+
+
+# Check if address already in private placement list
+def is_private_placement(ctx, address):
+    storage_key = concat(PP_KEY, address)
+    if Get(ctx, storage_key):
+        return True
+    return False
+
+
 # whitelist NEO address
 def register_address(ctx, args):
     ok_count = 0
@@ -23,7 +42,7 @@ def register_address(ctx, args):
                 OnKYCRegister(address)
                 ok_count += 1
             else:
-                print("User id too short!")
+                print("Address too short!")
     return ok_count
 
 
@@ -43,41 +62,11 @@ def get_status_address(ctx, address):
     return Get(ctx, storage_key)
 
 
-# whitelist people outside NEO blockchain
-def register_user_id(ctx, args):
-    ok_count = 0
-    if CheckWitness(TOKEN_OWNER):
-        for user_id in args:
-            # TODO - Need to figure out length of user_id
-            if len(user_id) >= 20:
-                storage_key = concat(KYC_USERID_KEY, user_id)
-                Put(ctx, storage_key, True)
-                OnKYCRegister(user_id)
-                ok_count += 1
-            else:
-                print("User id too short!")
-    return ok_count
-
-
-# Check KYC status of user_id for token sale
-def status_user_id(ctx, args):
-    if len(args) > 0:
-        user_id = args[0]
-        return get_status_user_id(ctx, user_id)
-    else:
-        print("No user_id input!")
-    return False
-
-
-# Pull kyc status of user_id
-def get_status_user_id(ctx, user_id):
-    storage_key = concat(KYC_USERID_KEY, user_id)
-    return Get(ctx, storage_key)
-
-
-# Transfer NEO/GAS for SPOT
-# Might actually disable this method in favor of just doing airdrop
-# for every call because we need to handle off-chain txs anyway
+# MintTokens is disabled for the sale. Spotcoin will mint all tokens with
+# reserve_tokens function after user has passed KYC on the website. Spotcoin
+# will generate a deposit address for the sale which will be visible on the
+# blockchain. Users may withdrawl from this address after Spotcoin has performed
+# and released a third party audit detailing the entire sale
 def perform_exchange(ctx):
 
     attachments = get_asset_attachments()
@@ -86,30 +75,14 @@ def perform_exchange(ctx):
     sent_amount_neo = attachments[2]
     sent_amount_gas = attachments[3]
 
-    exchange_ok = can_exchange(ctx, sender_addr, sent_amount_neo, sent_amount_gas, False)
+    print("mintTokens disabled for sale! Must use Spotcoin website!")
 
-    if not exchange_ok:
-        # Refund neo and gas if sent
-        if sent_amount_neo > 0:
-            OnRefund(sender_addr, sent_amount_neo)
-        if sent_amount_gas > 0:
-            OnRefund(sender_addr, sent_amount_gas)
-        return False
-
-    current_balance = Get(ctx, sender_addr)
-
-    exchanged_tokens = sent_amount_neo * TOKENS_PER_NEO / SPOT
-    exchanged_tokens += sent_amount_gas * TOKENS_PER_GAS / SPOT
-
-    new_total = exchanged_tokens + current_balance
-    Put(ctx, sender_addr, new_total)
-
-    add_to_circulation(ctx, exchanged_tokens)
-    add_to_ico_token_sold(ctx, exchanged_tokens)
-
-    OnTransfer(receiver_addr, sender_addr, exchanged_tokens)
-
-    return True
+    # Refund neo and gas if sent
+    if sent_amount_neo > 0:
+        OnRefund(sender_addr, sent_amount_neo)
+    if sent_amount_gas > 0:
+        OnRefund(sender_addr, sent_amount_gas)
+    return False
 
 
 # Test if can exchange
@@ -126,7 +99,7 @@ def can_exchange(ctx, sender_addr, sent_amount_neo, sent_amount_gas, verify_only
     amount_requested = sent_amount_neo * TOKENS_PER_NEO / SPOT
     amount_requested += sent_amount_gas * TOKENS_PER_GAS / SPOT
 
-    exchange_ok = calculate_can_exchange(ctx, amount_requested, sender_addr, verify_only)
+    exchange_ok = calculate_can_exchange(ctx, amount_requested, sender_addr, verify_only, False)
 
     if not exchange_ok:
         print("Failed to meet exchange conditions")
@@ -135,28 +108,17 @@ def can_exchange(ctx, sender_addr, sent_amount_neo, sent_amount_gas, verify_only
 
 
 # Check if within ICO bounds and in expected range of contribution
-def calculate_can_exchange(ctx, amount, address, verify_only):
+def calculate_can_exchange(ctx, amount, address, verify_only, is_private):
+
 
     # don't allow exchange if sale is paused
-    if Get(ctx, SALE_PAUSED_KEY, True):
+    if Get(ctx, SALE_PAUSED_KEY):
         print("Sale is paused")
         return False
 
-    # Prefer to use unix timestamp
-    """
-    height = GetHeight()
-
-    if height < ICO_DATE_START:
-        print("Token sale has not yet begun!")
-        return False
-
-    if height > ICO_DATE_END:
-        print("Token sale has ended!")
-        return False
-    """
-
     # Favor doing by unix time of latest block
     time_now = get_now()
+
 
     if time_now < ICO_DATE_START:
         print("Token sale has not yet begun!")
@@ -165,6 +127,7 @@ def calculate_can_exchange(ctx, amount, address, verify_only):
     if time_now > ICO_DATE_END:
         print("Token sale has ended! ")
         return False
+
 
     # Check overflow of public amount
     current_sold = Get(ctx, ICO_TOKEN_SOLD_KEY)
@@ -178,6 +141,11 @@ def calculate_can_exchange(ctx, amount, address, verify_only):
     if amount < MIN_PUBLIC_AMOUNT:
         print("Must purchase at least 50 tokens")
         return False
+
+
+    # Only need to check maximum contribution for non-private placement
+    if is_private:
+        return True
 
     if amount <= MAX_PUBLIC_AMOUNT:
 
@@ -211,24 +179,35 @@ def reserve_tokens(ctx, args):
     """
     if CheckWitness(TOKEN_OWNER):
 
-        if len(args) == 2:
+        if len(args) == 3:
 
             address = args[0]
 
-            # Reserve function needs to pass in user_id or NEO address
+            # Reserve function needs to pass in NEO address
             # and we verify its on a whitelist for one
-            whitelisted_address = get_status_address(ctx, address)
-            if not whitelisted_address:
+            if not get_status_address(ctx, address):
                 print("Not KYC approved")
                 return False
 
             # Second parameter is amount in Tokens
             amount = args[1] * SPOT
 
+            # Third parameter is if this is private placement
+            # and dictages if tokens have a lockup period
+            is_private = False
+            if args[2] is True:
+                is_private = True
+
+
+            if is_private and not is_private_placement(ctx, address):
+                success = add_private_placement(ctx, address)
+
+
             # Will make sure does not exceed limit for sale
             # meets dates of sale, and does not exceed personal
             # contribution
-            if not calculate_can_exchange(ctx, amount, address, False):
+            exchange_ok = calculate_can_exchange(ctx, amount, address, False, is_private)
+            if not exchange_ok:
                 print("Failed to meet exchange conditions")
                 return False
 
@@ -239,15 +218,15 @@ def reserve_tokens(ctx, args):
             Put(ctx, address, new_total)
 
             # update the in circulation amount
-            add_to_circulation(ctx, amount)
-            add_to_ico_token_sold(ctx, amount)
+            success = add_to_circulation(ctx, amount)
+            success = add_to_ico_token_sold(ctx, amount)
 
             # dispatch transfer event
             OnTransfer(TOKEN_OWNER, address, amount)
 
             return True
 
-        print("Wrong args: <address> <amount>")
+        print("Wrong args: <address> <amount> <is_private_placement>")
         return False
 
     print("Not contract owner")
@@ -300,48 +279,35 @@ def mint_team(ctx):
         print("You are not asset owner!")
         return False
 
-    # If by block height
-    """
-    height = GetHeight()
-
-    if height < ICO_DATE_END:
-        print("Sale not yet over, need to wait to mintTeam tokens")
-        return False
-    """
-
     time_now = get_now()
     if time_now < ICO_DATE_END:
         print("Sale not yet over, need to wait to mintTeam tokens")
         return False
 
-    if Get(ctx, TOKEN_OWNER):
+    if Get(ctx, TEAM_ADDRESS):
         print("Already distributed team portion!")
         return False
 
 
-    print("Get tokens sold")
     # Get ratio of tokens sold from 66 million (for instance 50 mil / 66 mil = 0.7575)
     sold = Get(ctx, ICO_TOKEN_SOLD_KEY)
 
-    print("Get ratio")
     # Mint that ratio of team tokens to maintain 2:1 ratio
     # For example, if 50 mil public tokens sold, have 25 mil for team
     # Need to multiply before divide because there is no floating point support
     amount_team = (sold * TOKEN_TEAM) / TOKEN_TOTAL_PUBLIC
-
-    print("get circ")
 
     current_in_circulation = Get(ctx, TOKEN_IN_CIRCULATION_KEY)
 
     new_total = current_in_circulation + amount_team
 
     if new_total > TOKEN_TOTAL_SUPPLY:
-        print("Amount great than tokens available")
+        print("Amount greater than tokens available")
         return False
 
     # TODO
     # Put team tokens in owner address, but maybe want to change
     # this to another wallet address
-    Put(ctx, TOKEN_OWNER, amount_team)
+    Put(ctx, TEAM_ADDRESS, amount_team)
 
     return add_to_circulation(ctx, amount_team)

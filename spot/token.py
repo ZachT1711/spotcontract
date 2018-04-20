@@ -12,6 +12,9 @@ TOKEN_DECIMALS = 8
 # Uses this temporarily for private net
 TOKEN_OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
 
+# If wanting to store team tokens in a different wallet
+TEAM_ADDRESS = b'\x9c\xdb}\x9e(\xfdFT/\xceZ\xd4\xfe\xd6\x82/\x8f\xa1\xcc\xae'
+
 # Shorthand for 1 SPOT is 8 decimal places
 SPOT = 100000000
 
@@ -44,12 +47,14 @@ ICO_DATE_START = 1525183200
 # June 1st 2018 @ 1400 UTC (1800 Tbilisi)
 ICO_DATE_END = 1527861600
 
-"""
-# When testing in private Net, set this to true
-ICO_DATE_START = 1522823407 + 60*5
-ICO_DATE_END = 1522827663 + 60*34
-"""
+# June 1st 2019 @ 1400 UTC (1800 Tbilisi)
+PP_LOCKUP_END = 1559397600
 
+"""
+ICO_DATE_START = 1523792742
+ICO_DATE_END = 1523798742
+PP_LOCKUP_END = 1523804742
+"""
 
 # Storage keys
 TOKEN_IN_CIRCULATION_KEY = b'in_circulation'
@@ -58,6 +63,7 @@ KYC_USERID_KEY = b'kyc_userid'
 ICO_TOKEN_SOLD_KEY = b'tokens_sold_in_ico'
 LIMITED_ROUND_KEY = b'r1'
 SALE_PAUSED_KEY = b'sale_paused'
+PP_KEY = b'priv_placement'
 
 
 def amount_available(ctx):

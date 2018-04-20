@@ -50,14 +50,6 @@ def Main(operation, args):
         if operation == 'tokensale_status':
             return status_address(ctx, args)
 
-        """ Not using for now
-        if operation == 'tokensale_register_id':
-            return register_user_id(ctx, args)
-
-        if operation == 'tokensale_status_id':
-            return status_user_id(ctx, args)
-        """
-
         if operation == 'tokensale_available':
             return public_sale_available(ctx)
 
