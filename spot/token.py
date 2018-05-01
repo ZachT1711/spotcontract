@@ -10,10 +10,10 @@ TOKEN_DECIMALS = 8
 
 # TODO - enter this when we know the NEO address we want to deposit to
 # Uses this temporarily for private net
-TOKEN_OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
+TOKEN_OWNER = b'\xeb\x7f\x94Ri@<2\xe89\x9d\xe3\x1f\\\xec7\xf8\x03\xf5|'
 
 # If wanting to store team tokens in a different wallet
-TEAM_ADDRESS = b'\x9c\xdb}\x9e(\xfdFT/\xceZ\xd4\xfe\xd6\x82/\x8f\xa1\xcc\xae'
+TEAM_ADDRESS = b'\x0f b\xa7\xa9\xcf\x8eD\x00\x87\xc4\xcfb\xc6x\x99%t4\xc3'
 
 # Shorthand for 1 SPOT is 8 decimal places
 SPOT = 100000000
@@ -38,23 +38,17 @@ MAX_PUBLIC_AMOUNT = 1000000 * 100000000
 # Must buy more than 50 SPOT
 MIN_PUBLIC_AMOUNT = 50 * 100000000
 
-# Soft cap at 6 million
-ICO_SOFT_CAP = 6000000 * 100000000
+# Soft cap at 10 million
+ICO_SOFT_CAP = 10000000 * 100000000
 
 # May 1st 2018 @ 1400 UTC (1800 Tbilisi)
 ICO_DATE_START = 1525183200
 
-# June 1st 2018 @ 1400 UTC (1800 Tbilisi)
-ICO_DATE_END = 1527861600
+# Agust 15th 2018 @ 1400 UTC (1800 Tbilisi)
+ICO_DATE_END = 1534341600
 
 # June 1st 2019 @ 1400 UTC (1800 Tbilisi)
 PP_LOCKUP_END = 1559397600
-
-"""
-ICO_DATE_START = 1523792742
-ICO_DATE_END = 1523798742
-PP_LOCKUP_END = 1523804742
-"""
 
 # Storage keys
 TOKEN_IN_CIRCULATION_KEY = b'in_circulation'

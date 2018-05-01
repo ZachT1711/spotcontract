@@ -3,5 +3,4 @@ bytecode==0.5
 httplib2==0.11.3
 logzero==1.5.0
 neo-boa==0.4.1
-pkg-resources==0.0.0
 pycodestyle==2.3.1
