@@ -10,10 +10,10 @@ TOKEN_DECIMALS = 8
 
 # TODO - enter this when we know the NEO address we want to deposit to
 # Uses this temporarily for private net
-TOKEN_OWNER = b'\xeb\x7f\x94Ri@<2\xe89\x9d\xe3\x1f\\\xec7\xf8\x03\xf5|'
+TOKEN_OWNER = b'\xb7\xfc\xfa\xe3\xb7O\xaf\xd4\xd3\xfeR\xec+\xd3A\x92\xd7\xbf\x12\r'
 
 # If wanting to store team tokens in a different wallet
-TEAM_ADDRESS = b'\x0f b\xa7\xa9\xcf\x8eD\x00\x87\xc4\xcfb\xc6x\x99%t4\xc3'
+TEAM_ADDRESS = b'\xb7\xfc\xfa\xe3\xb7O\xaf\xd4\xd3\xfeR\xec+\xd3A\x92\xd7\xbf\x12\r'
 
 # Shorthand for 1 SPOT is 8 decimal places
 SPOT = 100000000
@@ -41,10 +41,12 @@ MIN_PUBLIC_AMOUNT = 50 * 100000000
 # Soft cap at 10 million
 ICO_SOFT_CAP = 10000000 * 100000000
 
+# For mainnet
+
 # May 1st 2018 @ 1400 UTC (1800 Tbilisi)
 ICO_DATE_START = 1525183200
 
-# Agust 15th 2018 @ 1400 UTC (1800 Tbilisi)
+# August 15th 2018 @ 1400 UTC (1800 Tbilisi)
 ICO_DATE_END = 1534341600
 
 # June 1st 2019 @ 1400 UTC (1800 Tbilisi)
