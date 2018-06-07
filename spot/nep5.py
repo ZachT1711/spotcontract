@@ -27,7 +27,11 @@ def handle_nep51(ctx, operation, args):
 
     elif operation == 'balanceOf':
         if len(args) == 1:
-            return Get(ctx, args[0])
+            addr = args[0]
+            if len(addr) != 20:
+                print("Invalid address")
+                return 0
+            return Get(ctx, addr)
 
     elif operation == 'transfer':
         if len(args) == 3:
@@ -51,9 +55,15 @@ def handle_nep51(ctx, operation, args):
 def do_transfer(ctx, t_from, t_to, amount):
 
     if amount <= 0:
+        print("Invalid amount")
         return False
 
     if len(t_to) != 20:
+        print("Invalid address")
+        return False
+
+    if len(t_from) != 20:
+        print("Invalid address")
         return False
 
     if CheckWitness(t_from):
@@ -101,10 +111,15 @@ def do_transfer_from(ctx, t_from, t_to, amount):
     if amount <= 0:
         return False
 
-    available_key = concat(t_from, t_to)
-
-    if len(available_key) != 40:
+    if len(t_to) != 20:
+        print("Invalid address")
         return False
+
+    if len(t_from) != 20:
+        print("Invalid address")
+        return False
+
+    available_key = concat(t_from, t_to)
 
     available_to_to_addr = Get(ctx, available_key)
 
@@ -145,12 +160,24 @@ def do_transfer_from(ctx, t_from, t_to, amount):
 
 def do_approve(ctx, t_owner, t_spender, amount):
 
+    if len(t_spender) != 20:
+        print("Invalid address")
+        return False
+
+    if len(t_owner) != 20:
+        print("Invalid address")
+        return False
+
     if not CheckWitness(t_owner):
+        print("Invalid witness")
         return False
 
-    if amount < 0:
+    if amount <= 0:
+        print("Invalid amount")
         return False
 
+    # cannot approve an amount that is
+    # currently greater than the from balance
     if Get(ctx, t_owner) >= amount:
 
         approval_key = concat(t_owner, t_spender)

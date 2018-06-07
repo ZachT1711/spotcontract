@@ -50,6 +50,9 @@ def register_address(ctx, args):
 def status_address(ctx, args):
     if len(args) > 0:
         addr = args[0]
+        if len(addr) != 20:
+            print("Invalid address length")
+            return False
         return get_status_address(ctx, addr)
     else:
         print("No address input!")
@@ -181,6 +184,10 @@ def reserve_tokens(ctx, args):
 
         if len(args) == 3:
 
+            if len(args[0]) != 20:
+                print("Invalid address")
+                return False
+
             address = args[0]
 
             # Reserve function needs to pass in NEO address
@@ -191,6 +198,10 @@ def reserve_tokens(ctx, args):
 
             # Second parameter is amount in Tokens
             amount = args[1] * SPOT
+
+            if amount < 1:
+                print("Insufficient amount")
+                return False
 
             # Third parameter is if this is private placement
             # and dictages if tokens have a lockup period
