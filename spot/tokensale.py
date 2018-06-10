@@ -13,6 +13,7 @@ OnRefund = RegisterAction('refund', 'addr_to', 'amount')
 
 
 # Add address as private placement, has implications on withdrawl
+# and allow minting more than 1 million tokens
 def add_private_placement(ctx, address):
     print("Adding private placement address")
     if CheckWitness(TOKEN_OWNER):
@@ -88,28 +89,6 @@ def perform_exchange(ctx):
     return False
 
 
-# Test if can exchange
-def can_exchange(ctx, sender_addr, sent_amount_neo, sent_amount_gas, verify_only):
-
-    if sent_amount_gas == 0 and sent_amount_neo ==0:
-        print("No neo or gas attached!")
-        return False
-
-    if not (get_status_address(ctx, sender_addr)):
-        print("Address not in KYC whitelisted")
-        return False
-
-    amount_requested = sent_amount_neo * TOKENS_PER_NEO / SPOT
-    amount_requested += sent_amount_gas * TOKENS_PER_GAS / SPOT
-
-    exchange_ok = calculate_can_exchange(ctx, amount_requested, sender_addr, verify_only, False)
-
-    if not exchange_ok:
-        print("Failed to meet exchange conditions")
-
-    return exchange_ok
-
-
 # Check if within ICO bounds and in expected range of contribution
 def calculate_can_exchange(ctx, amount, address, verify_only, is_private):
 
@@ -117,6 +96,11 @@ def calculate_can_exchange(ctx, amount, address, verify_only, is_private):
     # don't allow exchange if sale is paused
     if Get(ctx, SALE_PAUSED_KEY):
         print("Sale is paused")
+        return False
+
+    # don't allow exchange if sale has been ended
+    if Get(ctx, END_SALE_KEY):
+        print("Sale has ended!")
         return False
 
     # Favor doing by unix time of latest block
@@ -169,14 +153,14 @@ def calculate_can_exchange(ctx, amount, address, verify_only, is_private):
     return False
 
 
-# Reserve tokens for private placement or off-chain transcations
+# Reserve tokens for people who have contributed to the
+# tokensale via private placement, btc, eth, sib, neo, gas
+# or usd/euro
 def reserve_tokens(ctx, args):
     """
-
-    Airdrop Token for privatesale token buyers
-
     :param amount:amount of token to be airdropped
     :param to_addr:single address where token should be airdropped to
+    :param is_priv_placement:boolean to determine if the reservation is for private placement
     :return:
         bool: Whether the airdrop was successful
     """
@@ -204,7 +188,7 @@ def reserve_tokens(ctx, args):
                 return False
 
             # Third parameter is if this is private placement
-            # and dictages if tokens have a lockup period
+            # and dictates if tokens have a lockup period
             is_private = False
             if args[2] is True:
                 is_private = True
@@ -279,6 +263,18 @@ def resume_sale(ctx):
 
     return True
 
+# End sale completely. Totally non-reversible action
+# but allows sale to end early
+def end_sale(ctx):
+
+    if not CheckWitness(TOKEN_OWNER):
+        print("Must be owner to end sale")
+        return False
+
+    # mark the sale as paused
+    Put(ctx, END_SALE_KEY, True)
+
+    return True
 
 # mint team tokens after token sale ends, doing it after sale
 # rather than before because we want to have a 2:1 ratio of
@@ -290,8 +286,12 @@ def mint_team(ctx):
         print("You are not asset owner!")
         return False
 
+    # Can allow mint_team if after ICO_DATE_END or if END_SALE_KEY
+    # has been set.
+    ended_by_owner = Get(ctx, END_SALE_KEY)
+
     time_now = get_now()
-    if time_now < ICO_DATE_END:
+    if time_now < ICO_DATE_END and not ended_by_owner:
         print("Sale not yet over, need to wait to mintTeam tokens")
         return False
 

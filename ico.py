@@ -22,12 +22,11 @@ def Main(operation, args):
         if is_owner:
             return True
 
-        # Seems cleaner making it explicit
-        attachments = get_asset_attachments()
-        sender_addr = attachments[1]
-        sent_amount_neo = attachments[2]
-        sent_amount_gas = attachments[3]
-        return can_exchange(ctx, sender_addr, sent_amount_neo, sent_amount_gas, True)
+        # No mintToken like regular NEO crowdsale.
+        # Spotcoin takes offchain transactions (BTC, ETH, etc.)
+        # So all tokens are created through `airdrop` method
+        # after payment has been processed
+        return False
 
     elif trigger == Application():
 
@@ -73,6 +72,9 @@ def Main(operation, args):
 
         if operation == 'resume_sale':
             return resume_sale(ctx)
+
+        if operation == 'end_sale':
+            return end_sale(ctx)
 
         return 'unknown operation'
 

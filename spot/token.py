@@ -24,21 +24,22 @@ TOKEN_TOTAL_SUPPLY = 99000000 * 100000000
 # 66 million sold to public
 TOKEN_TOTAL_PUBLIC = 66000000 * 100000000
 
-# Reserved 33 million for team at start of token
-# contract
+# Max 33 million for team. Really only mints enough
+# to match a 2:1 ratio of public sale tokens
 TOKEN_TEAM = 33000000 * 100000000
 
-# About 0.50 USD per token as of April 3
-TOKENS_PER_NEO = 102 * 100000000
-TOKENS_PER_GAS = 32 * 100000000
-
-# MAX public an buy is 1 million tokens
+# MAX anyone from public can purchase is 1 million SPOT
+# Private placement amounts are tagged by address
 MAX_PUBLIC_AMOUNT = 1000000 * 100000000
 
-# Must buy more than 50 SPOT
-MIN_PUBLIC_AMOUNT = 50 * 100000000
+# Must buy more than 50 SPOT in public sale
+# but different promotions allows someone to
+# get smaller amounts
+MIN_PUBLIC_AMOUNT = 1 * 100000000
 
-# Soft cap at 10 million
+# Soft cap at ~10 million tokens, but not
+# really a hard check because actual
+# soft cap will be measured in USD
 ICO_SOFT_CAP = 10000000 * 100000000
 
 # For mainnet
@@ -55,10 +56,9 @@ PP_LOCKUP_END = 1559397600
 # Storage keys
 TOKEN_IN_CIRCULATION_KEY = b'in_circulation'
 KYC_KEY = b'kyc_neo_address'
-KYC_USERID_KEY = b'kyc_userid'
 ICO_TOKEN_SOLD_KEY = b'tokens_sold_in_ico'
-LIMITED_ROUND_KEY = b'r1'
 SALE_PAUSED_KEY = b'sale_paused'
+END_SALE_KEY = b'sale_over'
 PP_KEY = b'priv_placement'
 
 

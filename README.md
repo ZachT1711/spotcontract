@@ -1,6 +1,6 @@
 # Spotcoin ICO Contract
 
-Deployed on Neo MainNet with Script Hash `0x4ce5de1c7de5db3f69850578ea975af8c503fff7`
+Will be deployed on Neo MainNet with Script Hash `0x0a91cdc3c5ff89983c79e3c72e1ccd9e5beaa5d5`
 
 ## Details 
 
