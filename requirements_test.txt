@@ -1,1 +1,1 @@
-neo-python==0.7.8
+neo-python==0.8.1
