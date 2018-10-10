@@ -61,9 +61,6 @@ def Main(operation, args):
         if operation == 'tokens_sold':
             return tokens_sold(ctx)
 
-        if operation == 'reached_softcap':
-            return reached_softcap(ctx)
-
         if operation == 'mint_team':
             return mint_team(ctx)
 

@@ -8,8 +8,7 @@ TOKEN_NAME = 'Spotcoin'
 TOKEN_SYMBOL = 'SPOT'
 TOKEN_DECIMALS = 8
 
-# TODO - enter this when we know the NEO address we want to deposit to
-# Uses this temporarily for private net
+# Owner address
 TOKEN_OWNER = b'\xb7\xfc\xfa\xe3\xb7O\xaf\xd4\xd3\xfeR\xec+\xd3A\x92\xd7\xbf\x12\r'
 
 # If wanting to store team tokens in a different wallet
@@ -29,26 +28,21 @@ TOKEN_TOTAL_PUBLIC = 66000000 * 100000000
 TOKEN_TEAM = 33000000 * 100000000
 
 # MAX anyone from public can purchase is 1 million SPOT
-# Private placement amounts are tagged by address
+# Private placement amounts are tagged by address and timelocked
 MAX_PUBLIC_AMOUNT = 1000000 * 100000000
 
 # Must buy more than 50 SPOT in public sale
 # but different promotions allows someone to
-# get smaller amounts
+# get smaller amounts, so disable less than one
 MIN_PUBLIC_AMOUNT = 1 * 100000000
-
-# Soft cap at ~10 million tokens, but not
-# really a hard check because actual
-# soft cap will be measured in USD
-ICO_SOFT_CAP = 10000000 * 100000000
 
 # For mainnet
 
 # May 1st 2018 @ 1400 UTC (1800 Tbilisi)
-ICO_DATE_START = 1525183200
+ICO_DATE_START = 1540214040
 
-# August 15th 2018 @ 1400 UTC (1800 Tbilisi)
-ICO_DATE_END = 1534341600
+# November 2nd 2018 @ 1400 UTC (1800 Tbilisi)
+ICO_DATE_END = 1541167200
 
 # June 1st 2019 @ 1400 UTC (1800 Tbilisi)
 PP_LOCKUP_END = 1559397600

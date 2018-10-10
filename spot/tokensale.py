@@ -228,11 +228,6 @@ def reserve_tokens(ctx, args):
     return False
 
 
-# Check if soft cap reached
-def reached_softcap(ctx):
-    return get_ico_token_sold(ctx) >= ICO_SOFT_CAP
-
-
 # Get tokens sold, not including team distribution
 def tokens_sold(ctx):
     return get_ico_token_sold(ctx)
