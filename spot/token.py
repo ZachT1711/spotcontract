@@ -8,11 +8,9 @@ TOKEN_NAME = 'Spotcoin'
 TOKEN_SYMBOL = 'SPOT'
 TOKEN_DECIMALS = 8
 
-# Owner address
-TOKEN_OWNER = b'\xb7\xfc\xfa\xe3\xb7O\xaf\xd4\xd3\xfeR\xec+\xd3A\x92\xd7\xbf\x12\r'
-
-# If wanting to store team tokens in a different wallet
-TEAM_ADDRESS = b'\xb7\xfc\xfa\xe3\xb7O\xaf\xd4\xd3\xfeR\xec+\xd3A\x92\xd7\xbf\x12\r'
+# For privnet testing
+TOKEN_OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
+TEAM_ADDRESS = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
 
 # Shorthand for 1 SPOT is 8 decimal places
 SPOT = 100000000
@@ -36,16 +34,10 @@ MAX_PUBLIC_AMOUNT = 1000000 * 100000000
 # get smaller amounts, so disable less than one
 MIN_PUBLIC_AMOUNT = 1 * 100000000
 
-# For mainnet
-
-# May 1st 2018 @ 1400 UTC (1800 Tbilisi)
-ICO_DATE_START = 1540214040
-
-# November 2nd 2018 @ 1400 UTC (1800 Tbilisi)
-ICO_DATE_END = 1541167200
-
-# June 1st 2019 @ 1400 UTC (1800 Tbilisi)
-PP_LOCKUP_END = 1559397600
+# For privnet
+ICO_DATE_START = 1539179009
+ICO_DATE_END = 1539179609
+PP_LOCKUP_END = 1539180209
 
 # Storage keys
 TOKEN_IN_CIRCULATION_KEY = b'in_circulation'
