@@ -9,8 +9,8 @@ TOKEN_SYMBOL = 'SPOT'
 TOKEN_DECIMALS = 8
 
 # For privnet testing
-TOKEN_OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
-TEAM_ADDRESS = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'
+TOKEN_OWNER = b'\xd8\xe4\x12\x0b&}\x83Y:m\xce\xea7\x9dw=\x80__\x16'
+TEAM_ADDRESS = b'\xd8\xe4\x12\x0b&}\x83Y:m\xce\xea7\x9dw=\x80__\x16'
 
 # Shorthand for 1 SPOT is 8 decimal places
 SPOT = 100000000
@@ -34,10 +34,10 @@ MAX_PUBLIC_AMOUNT = 1000000 * 100000000
 # get smaller amounts, so disable less than one
 MIN_PUBLIC_AMOUNT = 1 * 100000000
 
-# For privnet
+# For testnet
 ICO_DATE_START = 1539179009
-ICO_DATE_END = 1539179609
-PP_LOCKUP_END = 1539180209
+ICO_DATE_END = 2539179609
+PP_LOCKUP_END = 2539180209
 
 # Storage keys
 TOKEN_IN_CIRCULATION_KEY = b'in_circulation'
