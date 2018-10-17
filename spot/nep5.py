@@ -172,8 +172,8 @@ def do_approve(ctx, t_owner, t_spender, amount):
         print("Invalid witness")
         return False
 
-    if amount <= 0:
-        print("Invalid amount")
+    if amount < 0:
+        print("Negative amount")
         return False
 
     # cannot approve an amount that is
@@ -195,5 +195,13 @@ def do_approve(ctx, t_owner, t_spender, amount):
 
 
 def do_allowance(ctx, t_owner, t_spender):
+
+    if len(t_spender) != 20:
+        print("Invalid address")
+        return 0
+
+    if len(t_owner) != 20:
+        print("Invalid address")
+        return 0
 
     return Get(ctx, concat(t_owner, t_spender))
