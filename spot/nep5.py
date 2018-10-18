@@ -78,12 +78,6 @@ def do_transfer(ctx, t_from, t_to, amount):
             print("insufficient funds")
             return False
 
-        if is_private_placement(ctx, t_from):
-            time_now = get_now()
-            if time_now < PP_LOCKUP_END:
-                print("Token still in 1 year private placement lockup!")
-                return False
-
         if from_val == amount:
             Delete(ctx, t_from)
 

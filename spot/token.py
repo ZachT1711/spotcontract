@@ -38,14 +38,11 @@ MIN_PUBLIC_AMOUNT = 1 * 100000000
 
 # For mainnet
 
-# May 1st 2018 @ 1400 UTC (1800 Tbilisi)
-ICO_DATE_START = 1540214040
+# October 18th 2018 @ 00:00 GMT
+ICO_DATE_START = 1539820800
 
-# November 2nd 2018 @ 1400 UTC (1800 Tbilisi)
+# November 9th 2018 @ 0000 UTC
 ICO_DATE_END = 1541167200
-
-# June 1st 2019 @ 1400 UTC (1800 Tbilisi)
-PP_LOCKUP_END = 1559397600
 
 # Storage keys
 TOKEN_IN_CIRCULATION_KEY = b'in_circulation'
