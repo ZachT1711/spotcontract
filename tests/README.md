@@ -36,7 +36,7 @@ You can verify the contract and find the contract hash with:
 ```
 neo> contract search Spot
 ```
-Should be something like: `0xfd623b9d9f68aa26eb965b0076e75148be294eca`, this will be used to with `testinvoke` for all contract methods from this point forward
+Should be something like: `0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c`, this will be used to with `testinvoke` for all contract methods from this point forward
 
 You can also verify a transaction has finished with
 ```
@@ -45,11 +45,11 @@ neo> tx <txhash>
 
 #### Deploy Contract
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca deploy []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c deploy []
 ```
 Test cannot deploy twice
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca deploy []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c deploy []
 ```
 
 #### TURN ON CONTRACT LOGGING
@@ -62,84 +62,84 @@ neo> config sc-events on
 
 Amount left in sale: 66 million at beginning of sale
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca tokensale_available []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c tokensale_available []
 ```
 
 Total in circulation thus far: 0 at beginning of sale
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca circulation []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c circulation []
 ```
 
 Total tokens sold thus far: 0 at beginning of sale
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca tokens_sold []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c tokens_sold []
 ```
 
 
 #### Register User and Verify KYC status
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca tokensale_register ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c tokensale_register ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
 # wait for transaction to sync...
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca tokensale_status ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c tokensale_status ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
 
 # Try an unverified user
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca tokensale_status ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y"]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c tokensale_status ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y"]
 ```
 
 Can also import many addresses at once
 ```
-testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca tokensale_register ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", "ASRuk8ggWiFaC7LNmYGkC8kTeELNSi6Wz9", "ASTibgUJSJe7PoRZdkGM8hSmpiHFgoDgZP", "AQygubFSHbFJP7gWsqZEy8LJR1PijAmtv7", "AGDtLGawthnez5CHKjNzAMhfxhK99YKXYf", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", "AMRcVTgFWDYBQSEHt8sa3RVJkapYFq4dyB", "ARzuN5Rc8Mdv6bLDswETBzwbBuMJXQVWYW"]
+testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c tokensale_register ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", "ASRuk8ggWiFaC7LNmYGkC8kTeELNSi6Wz9", "ASTibgUJSJe7PoRZdkGM8hSmpiHFgoDgZP", "AQygubFSHbFJP7gWsqZEy8LJR1PijAmtv7", "AGDtLGawthnez5CHKjNzAMhfxhK99YKXYf", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", "AMRcVTgFWDYBQSEHt8sa3RVJkapYFq4dyB", "ARzuN5Rc8Mdv6bLDswETBzwbBuMJXQVWYW"]
 ```
 
 #### Pause and Resume Contract
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca pause_sale []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c pause_sale []
 ```
 And resume
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca resume_sale []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c resume_sale []
 ```
 
 #### End Sale 
 We call this method if Spotcoin closes the sale before the ICO_END_DATE
 which was set to a point further in the future than expected
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca end_sale []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c end_sale []
 ```
 
 #### Airdrop tokens for KYC'd user
 
 Airdrop 10,000 tokens for a KYC'd user
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 10000, False]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 10000, False]
 ```
 Verify the balance is correct
 
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca balanceOf ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c balanceOf ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
 ```
 
 Airdrop of less than 50 tokens is invalid
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 49, False]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 49, False]
 ```
 
 Airdrop of over 1,000,000 tokens is invalid
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 1000001, False]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 1000001, False]
 ```
 
 Limited to 1,000,000 total through several buys
 ```
 # Reserve of 900,000 should pass
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 900000, False]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 900000, False]
 # Reserve of 100,001 should fail because now over 1,000,000 total
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 100001, False]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 100001, False]
 ```
 
 Airdrop private placement, which can exceed limit of 1,000,000 SPOT
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 2000001, True]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 2000001, True]
 ```
 
 #### Purchase tokens via NEO/GAS
@@ -148,7 +148,7 @@ This function is disabled for the Spotcoin ICO, and will issue a refund to the u
 is that tokens will not be immediately distributed, but held in escrow address until the public
 audit of the ICO is complete.
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca mintTokens [] --attach-neo=5 --attach-gas=5
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c mintTokens [] --attach-neo=5 --attach-gas=5
 
 ```
 
@@ -156,26 +156,26 @@ neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca mintTokens [] --attac
 
 Must be after ICO_DATE_END
 ```
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca mint_team []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c mint_team []
 ```
 Will deposit tokens in `TEAM_ADDRESS`
 
 #### NEP-5
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca name []
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca decimals []
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca symbol []
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca totalSupply []
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca balanceOf ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca transfer ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 100]
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca approve ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 100]
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca allowance ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP"]
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca transferFrom ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 100]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c name []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c decimals []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c symbol []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c totalSupply []
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c balanceOf ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx"]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c transfer ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 100]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c approve ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 100]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c allowance ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP"]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c transferFrom ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "AQbFDgZuNxi4LyUVzrydcvSuQuAx1vQ9rP", 100]
 
 
 #### Import token and check balance
 You can import token and view the balance in any wallet SPOT was sent to
 ```
-neo> import token 0xfd623b9d9f68aa26eb965b0076e75148be294eca
+neo> import token 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c
 neo> wallet
 ```
 
@@ -190,5 +190,5 @@ Open non-owner wallet (create one with `create wallet` if it doesn't exist), may
 ```
 neo> open wallet fixtures/non-owner.wallet
 [password]> testpassword
-neo> testinvoke 0xfd623b9d9f68aa26eb965b0076e75148be294eca airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 1000]
+neo> testinvoke 0x2830fc346b1c7a350914fbaea5ef7b3fbe3c994c airdrop ["AHbZkoUi6mjEMwcs13cWwayVUHxJEj6Dtx", 1000]
 ```
