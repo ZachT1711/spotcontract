@@ -1,1 +1,2 @@
 neo-python==0.8.1
+prompt-toolkit>=3.0.13 # not directly required, pinned by Snyk to avoid a vulnerability
