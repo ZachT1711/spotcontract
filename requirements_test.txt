@@ -1,1 +1,2 @@
 neo-python==0.8.1
+pycryptodome>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
