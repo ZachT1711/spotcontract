@@ -1,1 +1,5 @@
 neo-python==0.8.1
+gevent>=24.10.1 # not directly required, pinned by Snyk to avoid a vulnerability
+idna>=3.7 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
+twisted>=24.7.0rc1 # not directly required, pinned by Snyk to avoid a vulnerability
